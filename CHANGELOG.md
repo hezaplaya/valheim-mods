@@ -1,3 +1,14 @@
+## v2.4.0
+
+ - Update InfiniteFire to 1.2.0
+ - Update DiscordConnector to 3.1.3
+ - Update Server Devcommands to 1.109.0
+ - Update Location Reset to 0.10.9
+ - Multiplayer Tweaks to 0.12.1
+ - Update AzuExtendedPlayerInventory to 2.4.8
+ - Update MaxPlayerCount to 1.2.5
+ - Update BetterWisps to 1.0.43
+
 ## v2.3.0
 
 IMPORTANT: You will need to manually disable/uninstall TimeoutLimit or reinstall
