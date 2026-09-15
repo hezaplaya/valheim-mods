@@ -1,26 +1,29 @@
+import json
 import os
 import shutil
-import yaml
+import sqlite3
+import tempfile
 from pathlib import Path
-from dotenv import load_dotenv
+
+import dotenv
 
 # Load environment variables
-load_dotenv()
+dotenv.load_dotenv()
 
-profile_dir_env = os.getenv("R2MODMAN_PROFILE_DIR")
-assert profile_dir_env, "ERROR: R2MODMAN_PROFILE_DIR not found in .env file."
-r2_profile_dir = Path(profile_dir_env)
-r2_config_dir = r2_profile_dir / "BepInEx" / "config"
-mods_yml_path = r2_profile_dir / "mods.yml"
-assert r2_config_dir.exists(), f"ERROR: The directory {r2_config_dir} does not exist."
-assert mods_yml_path.exists(), f"ERROR: Could not find {mods_yml_path}."
+profile_dir_env = os.getenv("PROFILE_DIR")
+assert profile_dir_env, "ERROR: PROFILE_DIR not found in .env file."
+profile_dir = Path(profile_dir_env)
+config_dir = profile_dir / "BepInEx" / "config"
+sqlite_db_path = profile_dir.parent.parent.parent / "data.sqlite3"
+assert config_dir.is_dir(), f"ERROR: The directory {config_dir} does not exist."
+assert sqlite_db_path.is_file(), f"ERROR: Could not find {sqlite_db_path}."
 repo_config = Path("./config")
 toml_path = Path("thunderstore.toml")
 
-print(f"Syncing config files from: {r2_config_dir}")
+print(f"Syncing config files from: {config_dir}")
 shutil.rmtree(repo_config, ignore_errors=True)
 shutil.copytree(
-    r2_config_dir,
+    config_dir,
     repo_config,
     ignore=shutil.ignore_patterns(
         "*.bin",
@@ -44,26 +47,30 @@ shutil.copytree(
     ),
 )
 
-print(f"Reading active mod list from: {mods_yml_path}")
-with open(mods_yml_path, "r", encoding="utf-8") as f:
-    mods_data = yaml.safe_load(f)
+mods_data = []
+print(f"Opening database from: {sqlite_db_path}")
+# copy because windows vs. wsl locking
+with tempfile.NamedTemporaryFile() as tmp:
+    # -wal, -shm, etc
+    for f in sqlite_db_path.parent.glob(f"{sqlite_db_path.name}*"):
+        suffix = f.name.replace(sqlite_db_path.name, "")
+        shutil.copy2(f, tmp.name + suffix)
+    with sqlite3.connect(tmp.name) as db_conn:
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT mods FROM profiles WHERE name = ?;", (profile_dir.name,))
+        mods_json_rows = cursor.fetchmany(2)
+        assert len(mods_json_rows) == 1, f"ERROR: Expected 1 profile named {profile_dir.name}, found more."
+        mods_json = mods_json_rows[0][0]
+        mods_data = json.loads(mods_json)
 
 dependencies = []
 for mod in mods_data:
-    if not mod.get("enabled"):
+    full_name = mod["fullName"]
+    if "Modpack" in full_name:
         continue
-    # "Author-ModName"
-    if not (name_part := mod.get("name")):
-        continue
-    # Grab the nested versionNumber dictionary
-    if not (v := mod.get("versionNumber")):
-        continue
-    # Reconstruct the semantic version string
-    version_part = f"{v.get('major', 0)}.{v.get('minor', 0)}.{v.get('patch', 0)}"
-    # Thunderstore wants: "Author-ModName" = "1.2.3"
-    dependencies.append(f'"{name_part}" = "{version_part}"')
+    name, _, version = mod["fullName"].rpartition("-")
+    dependencies.append(f'"{name}" = "{version}"')
 dependencies = sorted(dependencies)
-
 print(f"Found {len(dependencies)} active dependencies: {'\n  '.join(dependencies)}")
 
 print("Updating thunderstore.toml dependencies...")
