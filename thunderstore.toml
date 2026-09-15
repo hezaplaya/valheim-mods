@@ -23,7 +23,7 @@ source = "./CHANGELOG.md"
 target = "CHANGELOG.md"
 
 [publish]
-repository = "https://thunderstore.io"
+repository = "https://hexium.gg"
 communities = [ "valheim" ]
 [publish.categories]
 valheim = [ "modpacks", "server-side", "client-side" ]
