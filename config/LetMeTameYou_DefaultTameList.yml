@@ -112,10 +112,6 @@
 # these are a way to combine attributes for organizing and ease of changing multiple creatures at once
 # They are formatted the same as a standard creature except the name starts with "group_"
 
-
-
-
-
 ##Vanilla Values##
 #	commandable:		Boar/Lox/Hen/Asksvin=false, Wolf=true
 #	taming time:		1800 (seconds)
@@ -132,487 +128,129 @@
 #	growTime:			Boar/Wolf=3000, Lox=6000, Hen/Asksvin=1800 for Egg Hatch + 3000 for baby to grow up (seconds)
 
 
-
-
-
-
-###Groups
-#   groups can be used to join specific values together to easily modify groups of creatures
-#   groups are specified the same way as a standard creature with just a prefix on the name "group_"
-#   such as
-
+### Base defaults, applied automatically to every creature ###
+# Was the old "*Default" line.
 group_Default:
-  fedDuration: 300
   commandable: true
-  consumeSearchInterval: 10
-  pregnancyChance: 0.5
+  tamingTime: 1800
+  fedDuration: 600
+  consumeRange: 1.6
+  consumeSearchInterval: 15
+  consumeSearchRange: 10
+  consumeItems: Raspberry,Blueberries,Carrot,Turnip,Mushroom,Cloudberry,OnionSoup,Onion
+  hostileToSelf: false
+  procreation: true
+  maxCreatures: 5
+  pregnancyChance: 0.33
+  pregnancyDuration: 60
+  growTime: 1800
 
-#The default group above overwrites the base for all configs, it does not need to be referenced below. It is automatically applied to all future configs.
-# SO BE CAREFUL what you change in the default above
 
-### Food Groups ####
-group_RawCarnivore:
-  consumeItems: SerpentMeat,RawMeat,NeckTail,FishRaw,LoxMeat,DeerMeat,WolfMeat,HareMeat
-
-group_CookedCarnivore:
-  consumeItems: CookedMeat,CookedLoxMeat,Sausages,NeckTailGrilled,SerpentMeatCooked,FishCooked,CookedDeerMeat,BoarJerky,WolfJerky,CookedWolfMeat,CookedHareMeat
-
-group_AllCarnivore:
-  consumeItems: SerpentMeat,RawMeat,NeckTail,FishRaw,LoxMeat,DeerMeat,WolfMeat,HareMeat,CookedMeat,CookedLoxMeat,Sausages,NeckTailGrilled,SerpentMeatCooked,FishCooked,CookedDeerMeat,BoarJerky,WolfJerky,CookedWolfMeat,CookedHareMeat
+### Food groups (old "*" blocks that only set consumeItems) ###
 
 group_Vegetarian:
   consumeItems: Raspberry,Blueberries,Carrot,Turnip,Mushroom,Cloudberry,OnionSoup,Onion
 
+group_RawMeat:
+  consumeItems: RawMeat,NeckTail,FishRaw,DeerMeat,WolfMeat,LoxMeat,HareMeat,ChickenMeat,SerpentMeat,BugMeat,AsksvinMeat,Softtissue
+
 group_NotPicky:
   consumeItems: SerpentMeatCooked,NeckTailGrilled,CookedMeat,CookedLoxMeat,Bread,Raspberry,Blueberries,Carrot,Turnip,Mushroom,Cloudberry,Honey,Mushroom,MushroomYellow,MushroomBlue,MinceMeatSauce,DeerStew,CookedDeerMeat,BoarJerky,BlackSoup,WolfMeatSkewer,WolfJerky,CookedWolfMeat,OnionSoup,Onion,CookedHareMeat
 
-group_GoblinGroup:
-  consumeItems: SerpentMeatCooked,CookedLoxMeat,BloodPudding,FishWraps,LoxPie,TurnipStew,SerpentStew,BlackSoup,WolfMeatSkewer,WolfJerky,CookedWolfMeat,CookedHareMeat
-  fedDuration: 500
+
+### "Just for funzies" ###
+# Was the old "*JustForFunzies" block: single mobs can be tamed, but they
+# do not breed and are shrunk down. Note hostileToSelf is on, so tamed ones
+# fight their wild counterparts.
+group_JustForFunzies:
+  consumeRange: 1.5
+  consumeSearchInterval: 30
+  consumeItems: RawMeat,NeckTail,FishRaw,DeerMeat,WolfMeat,LoxMeat,HareMeat,ChickenMeat,SerpentMeat,BugMeat,AsksvinMeat,Softtissue
   hostileToSelf: true
-  
-  #### Tier Groups ###
+  procreation: false
+  maxCreatures: 1
+  pregnancyChance: 0
+  pregnancyDuration: 0
+  growTime: 0
+  size: 0.66
 
-group_Tier1:
-  tamingTime: 1500
-  pregnancyDuration: 90
-  growTime: 2100
-  maxCreatures: 7
+####################  Vegetarians  #####################################
 
-group_Tier2:
-  tamingTime: 1600
-  pregnancyDuration: 100
-  growTime: 2300
-  maxCreatures: 7
-
-group_Tier3:
-  tamingTime: 1700
-  pregnancyDuration: 110
-  growTime: 2600
-  maxCreatures: 7
-
-group_Tier4:
-  tamingTime: 2000
-  pregnancyDuration: 120
-  growTime: 2900
-  maxCreatures: 7
-
-group_Tier5:
-  tamingTime: 2200
-  pregnancyDuration: 130
-  growTime: 3100
-  maxCreatures: 6
-
-group_Tier6:
-  tamingTime: 2400
-  pregnancyDuration: 140
-  growTime: 3300
-  maxCreatures: 6
-
-group_Tier7:
-  tamingTime: 2700
-  pregnancyDuration: 180
-  growTime: 3300
-  maxCreatures: 6
-  fedDuration: 225
-
-
-#### Size Groups ###   
-
-group_SizeSmall:
-  consumeRange: 1
-  consumeSearchRange: 12
-  size: 1.2
-  maxCreatures: 8
-
-group_SizeMedium:
-  consumeRange: 1.4
-  consumeSearchRange: 15
-  size: 1.5
-
-group_SizeLarge:
-  consumeRange: 2.2
-  consumeSearchRange: 20
-  size: 2.1
-
-group_SizeHuge:
-  consumeRange: 4
-  consumeSearchRange: 30
-  size: 3
-  maxCreatures: 4
-  pregnancyDuration: 200
-  growTime: 4000
-
-#### Creature Type Groups ####
-
-group_DvergerGroup:
-  consumeItems: MagicallyStuffedShroom,YggdrasilPorridge,SeekerAspic
-  fedDuration: 450
-  tamingTime: 2400
-  pregnancyDuration: 140
-  growTime: 3300
-  maxCreatures: 5
-  consumeRange: 1.4
-  consumeSearchRange: 15
-  size: 1.5
-
-group_Ashlands:
-  tamingTime: 2700
-  fedDuration: 250
-  consumeItems: SerpentMeatCooked,CookedBugMeat,CookedAsksvinMeat,CookedVoltureMeat
-  maxCreatures: 5
-  pregnancyDuration: 200
-  growTime: 3200
-  consumeRange: 2
-  consumeSearchRange: 20
-  size: 1.7
-
-group_AshlandsT2:
-  tamingTime: 2900
-  fedDuration: 250
-  consumeItems: SerpentMeatCooked,AsksvinEgg,PiquantPie,RoastedCrustPie,CookedBoneMawSerpentMeat
-  maxCreatures: 5
-  pregnancyDuration: 250
-  growTime: 3200
-  consumeRange: 2.5
-  consumeSearchRange: 20
-  size: 2
-
-group_Bosses:
-  maxCreatures: 4
-  pregnancyDuration: 200
-  growTime: 4000
-  fedDuration: 200
-####### End of Groups #######
-
-
-########  Creatures  ########
-
-#   groups are loaded in order and can overwrite parts of the group before it such as the Deer below:
-#   The Tier1 group is loaded, then the vegetarian, then the SizeMedium
-#   Any aspects after the groups line will also overwrite the groups
 Deer:
-  groups: Tier1,Vegetarian,SizeMedium
-  offspringName: Fawn
-  
-Boar:
-  groups: Tier1,Vegetarian,SizeMedium
-  commandable: true
-
-Greyling:
-  groups: Tier1,NotPicky,SizeMedium
+  groups: Vegetarian
 
 Neck:
-  groups: Tier1,SizeMedium
-  consumeItems: SerpentMeat,FishRaw,Bread,Raspberry,Blueberries,Cloudberry,Carrot,Mushroom,MushroomYellow,MushroomBlue,Turnip
-  egg: drake(1200:#00FF00:0.3)
-
-Bat:
-  groups: Tier1,Vegetarian,SizeMedium
-
-Greydwarf:
-  groups: Tier2,NotPicky,SizeMedium
-
-Skeleton:
-  groups: Tier2,RawCarnivore,SizeMedium
-  specialGroup: skeleton
-
-Surtling:
-  groups: Tier2,SizeMedium
-  consumeItems: Coal,ElderBark
-
-Blob:
-  groups: Tier3,RawCarnivore,SizeMedium
-
-Draugr:
-  groups: Tier3,RawCarnivore,SizeMedium
-
-Ghost:
-  groups: Tier3,RawCarnivore,SizeMedium
-
-Wraith:
-  groups: Tier3,RawCarnivore,SizeMedium
-
-Skeleton_Poison:
-  groups: Tier3,RawCarnivore,SizeMedium
-  specialGroup: skeleton
-
-Greydwarf_Shaman:
-  groups: Tier3,NotPicky,SizeMedium
-
-Leech:
-  groups: Tier3,SizeMedium
-  consumeItems: Bloodbag,SerpentMeat,RawMeat,NeckTail,FishRaw,LoxMeat,DeerMeat,WolfMeat,HareMeat
-  egg: chicken(1200:#B10000:1.5)
-
-Serpent:
-  groups: Tier3,RawCarnivore,SizeLarge
-  egg: drake(1500:#00B1B1:0.7)
-  tamingTime: 1800
-
-Bjorn:
-  groups: Tier3,RawCarnivore,SizeLarge
-  tamingTime: 1800
-
-BlobElite:
-  groups: Tier3,RawCarnivore,SizeMedium
-  tamingTime: 1800
-  maxCreatures: 6
-
-Greydwarf_Elite:
-  groups: Tier3,NotPicky,SizeMedium
-  tamingTime: 1800
-  maxCreatures: 6
-
-Deathsquito:
-  groups: Tier4,SizeSmall
-  consumeItems: Bloodbag,SerpentMeat,RawMeat,NeckTail,FishRaw,DeerMeat,WolfMeat,HareMeat
-  maxCreatures: 15
-  pregnancyDuration: 80
-  growTime: 400
-  egg: chicken(800:#D8DF00:0.6)
-
-Draugr_Elite:
-  groups: Tier4,RawCarnivore,SizeMedium
-
-Abomination:
-  groups: Tier5,RawCarnivore,SizeHuge
-
-Fenring:
-  groups: Tier4,RawCarnivore,SizeMedium
-  offspringName: Fenring_Pup
-
-Goblin:
-  groups: Tier4,GoblinGroup,SizeMedium
-
-Hatchling:
-  groups: Tier4,CookedCarnivore,SizeMedium
-  
-#Lox:
-#  groups: Tier4, SizeLarge
-#  consumeItems: Barley,Cloudberry,Flax,Onion
-#  fedDuration: 150
-#  commandable: false
-
-#Wolf:
-#  groups: Tier4,RawCarnivore,SizeMedium
-
-Troll:
-  groups: Tier4,SizeHuge
-  consumeItems: SerpentMeat,RawMeat,NeckTail,FishRaw,LoxMeat,Sausages,CookedMeat,CookedLoxMeat,Sausages,NeckTailGrilled,SerpentMeatCooked,Honey,DeerMeat,WolfMeat,CookedDeerMeat,BoarJerky,WolfJerky,CookedWolfMeat,CookedHareMeat
-  size: 2.5
-
-BlobTar:
-  groups: Tier5,RawCarnivore,SizeMedium
-
-Ulv:
-  groups: Tier5,RawCarnivore,SizeMedium
-  offspringName: Ulv_Pup
-
-Unbjorn:
-  groups: Tier5,RawCarnivore,SizeLarge
-
-Fenring_Cultist:
-  groups: Tier5,RawCarnivore,SizeMedium
-
-GoblinBrute:
-  groups: Tier5,GoblinGroup,SizeLarge
-
-GoblinShaman:
-  groups: Tier5,GoblinGroup,SizeMedium
-
-StoneGolem:
-  groups: Tier6,SizeHuge
-  consumeItems: CopperOre,IronOre,SilverOre,TinOre,Ruby
-  size: 2.3
-
-Dverger:
-  groups: DvergerGroup
-  consumeItems: MushroomOmelette,MisthareSupreme,FishAndBread,HoneyGlazedChicken,MeatPlatter,Salad
-
-DvergerMage,DvergerMageFire,DvergerMageIce,DvergerMageSupport,DvergerAshlands:
-  groups: DvergerGroup
-
-Seeker:
-  groups: Tier6,SizeMedium
-  consumeItems: Sap,HareMeat,CookedHareMeat,ChickenMeat,CookedChickenMeat,RoyalJelly
-  egg: drake(1600:#AE00A9:0.6)
-  growTime: 1800
-
-SeekerBrute:
-  groups: Tier7, SizeLarge
-  consumeItems: Sap,HareMeat,CookedHareMeat,ChickenMeat,CookedChickenMeat,RoyalJelly
-  egg: drake(1800:#7D0079:0.8)
-  growTime: 1800
-
-Tick:
-  groups: SizeMedium
-  tamingTime: 2100
-  pregnancyDuration: 150
-  maxCreatures: 10
-  consumeItems: BugMeat,CookedBugMeat,HareMeat,CookedHareMeat,Bloodbag,Entrails
-  egg: chicken(1400:#E38600:3)
-  growTime: 1000
-  fedDuration: 150
-
-Gjall:
-  groups: Tier7, SizeHuge
-  size: 2.3
-  egg: chicken(3500:#2C0800:6)
-  growTime: 2400
-  consumeItems: BugMeat,CookedBugMeat,HareMeat,CookedHareMeat,Bloodbag,Entrails
-  fedDuration: 300
+  groups: Vegetarian
+  egg: drake(1800:#00FF00:0.3)
 
 Hare:
-  groups: SizeMedium
-  tamingTime: 2000
-  pregnancyDuration: 60
-  growTime: 2300
-  maxCreatures: 7
-  pregnancyChance: 0.33
-  
-#Hen:
-#  groups: SizeSmall
-#  commandable: false
-#  tamingTime: 1800
-#  fedDuration: 600
-#  consumeSearchInterval: 15
-#  pregnancyChance: 0.33
-#  pregnancyDuration: 60
-#  consumeItems: CarrotSeeds,TurnipSeeds,OnionSeeds,BeechSeeds,BirchSeeds,Barley,Dandelion,VineGreenSeeds
+  groups: Vegetarian
 
+####################  Raw meat eaters  #################################
 
+Blob:
+  groups: RawMeat
+  maxCreatures: 4
 
-Charred_Twitcher,Charred_Twitcher_Summoned:
-  groups: Ashlands
-Charred_Melee,Charred_Melee_Fader:
-  groups: Ashlands
-Charred_Archer,Charred_Archer_Fader:
-  groups: Ashlands
-Charred_Mage:
-  groups: Ashlands
-  consumeItems: MorgenHeart,BlackCore
-
-Volture:
-  groups: Ashlands
-  consumeItems: AsksvinMeat,MorgenHeart,Softtissue,BugMeat
-  growTime: 1800
-  egg: chicken(1600:#A87F4E:2)
-  offspringName: Volture_Chick
-  
-#Asksvin:
-#  groups: Ashlands
-#  consumeItems: Vineberry,Fiddleheadfern,MushroomSmokePuff,MushroomJotunPuffs,Salad,ScorchingMedley,SpicyMarmalade
-#  commandable: false
+BlobTar:
+  groups: RawMeat
+  maxCreatures: 4
 
 BlobLava:
-  groups: Ashlands
-  consumeItems: Tar,Ooze
+  groups: RawMeat
+  maxCreatures: 4
+
+Serpent:
+  groups: RawMeat
+  size: 2
+  consumeRange: 2
 
 BonemawSerpent:
-  groups: AshlandsT2
-  consumeItems: SerpentMeatCooked,AsksvinEgg,PiquantPie,RoastedCrustPie
-  growTime: 2200
-  egg: asksvin(1900:#C42B2B:1.5)
+  groups: RawMeat
+  size: 2
+  consumeRange: 2
 
-Morgen,Morgen_NonSleeping:
-  groups: AshlandsT2
+Ulv:
+  groups: RawMeat
+  egg: drake(1800:#FFFF00:0.5)
 
-FallenValkyrie:
-  groups: AshlandsT2
-  growTime: 2200
-  egg: chicken(1900:#F1B5A5:3)
+####################  Not picky  #######################################
 
+Greydwarf:
+  groups: NotPicky
 
-###MiniBosses###  (The nochest variants are the ones from raids)
+Greyling:
+  groups: NotPicky
 
-group_MiniBosses:
-  consumeRange: 1.4
-  consumeSearchRange: 15
-  size: 1.5
-  requiredWorldKeys: defeated_eikthyr
-  maxCreatures: 3
+####################  Just for funzies  ################################
+# Tameable one at a time, no breeding, shrunk down.
 
-Skeleton_Hildir,Skeleton_Hildir_nochest:
-  groups: Tier4,MiniBosses,CookedCarnivore
+Greydwarf_Shaman:
+  groups: JustForFunzies
 
-Fenring_Cultist_Hildir,Fenring_Cultist_Hildir_nochest:
-  groups: Tier6,MiniBosses,RawCarnivore
+Greydwarf_Elite:
+  groups: JustForFunzies
+
+Skeleton:
+  groups: JustForFunzies
+
+Draugr:
+  groups: JustForFunzies
+
+Goblin:
+  groups: JustForFunzies
+
+GoblinBrute:
+  groups: JustForFunzies
+  consumeRange: 1.8
+
+GoblinShaman:
+  groups: JustForFunzies
 
 GoblinShaman_Hildir,GoblinShaman_Hildir_nochest:
-  groups: Tier7,MiniBosses,GoblinGroup
+  groups: JustForFunzies
+  consumeRange: 1.8
 
-GoblinBruteBros,GoblinBruteBros_nochest:
-  groups: Tier7,MiniBosses,GoblinGroup
-  tamingTime: 2900
-
-Charred_Melee_Dyrnwyn:
-  groups: MiniBosses
-  tamingTime: 3100
-  consumeItems: MorgenHeart,BlackCore
-  fedDuration: 500
-  pregnancyDuration: 200
-  growTime: 4000
-
-##Thungr (GoblinBrute_Hildir) is not normally by themself except if spawned in
-#GoblinBrute_Hildir
-
-BogWitchKvastur:
-  groups: SizeMedium
-  tamingTime: 999999
-  consumeItems: YggdrasilWood
-  fedDuration: 75
-  pregnancyChance: 0.66
-  pregnancyDuration: 250
-  growTime: 3400
-  offspringName: Kvester
-  requiredWorldKeys: defeated_bonemass
-  trade: TrophyKvastur=10
-
-
-###Bosses### (by default, you need to defeat each boss before you are able to tame that specific boss)   
-
-Eikthyr:
-  groups: Bosses,SizeLarge
-  consumeItems: Raspberry,Blueberries,Carrot,Turnip,Mushroom,Cloudberry,Onion,Honey,Barley,Bread
-  requiredWorldKeys: defeated_eikthyr
-  tamingTime: 2000
-
-gd_king:
-  groups: Bosses,SizeHuge,CookedCarnivore
-  requiredWorldKeys: defeated_gdking
-  tamingTime: 2200
-
-Bonemass:
-  groups: Bosses,SizeHuge,RawCarnivore
-  requiredWorldKeys: defeated_Bonemass
-  tamingTime: 2400
-
-Dragon:
-  groups: Bosses,SizeHuge,RawCarnivore
-  requiredWorldKeys: defeated_Dragon
-  tamingTime: 2500
-
-GoblinKing:
-  groups: Bosses,SizeHuge,CookedCarnivore
-  requiredWorldKeys: defeated_GoblinKing
-  tamingTime: 2700
-  fedDuration: 100
-
-
-SeekerQueen:
-  groups: Bosses,SizeHuge
-  requiredWorldKeys: defeated_queen
-  consumeItems: Sap,HareMeat,CookedHareMeat,ChickenMeat,CookedChickenMeat,RoyalJelly
-  tamingTime: 2900
-  egg: drake(2400:#7D00B0:2)
-  growTime: 2500
-
-Fader:
-  groups: Bosses,SizeHuge
-  requiredWorldKeys: defeated_fader
-  tamingTime: 3100
-  fedDuration: 100
-  consumeItems: SerpentMeatCooked,CookedBoneMawSerpentMeat
-  pregnancyDuration: 250
-
+Surtling:
+  groups: JustForFunzies
+  consumeItems: Coal,ElderBark
