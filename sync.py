@@ -44,6 +44,8 @@ shutil.copytree(
         "CW_Jesse.BetterNetworking.cfg",
         # Server devcommands aliases file
         "alias.yaml",
+        # LetMeTameYou backup file
+        "LetMeTameYou_DefaultTameList.yml.stock-backup",
     ),
 )
 
