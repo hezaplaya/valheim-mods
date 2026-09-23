@@ -264,6 +264,7 @@ GoblinShaman_Hildir,GoblinShaman_Hildir_nochest:
 
 Surtling:
   groups: JustForFunzies
+  consumeItems: Coal,ElderBark
 
 SeekerBrute:
   groups: RawMeat
