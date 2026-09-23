@@ -265,7 +265,7 @@ GoblinShaman_Hildir,GoblinShaman_Hildir_nochest:
 Surtling:
   groups: JustForFunzies
 
-SeekerSoldier:
+SeekerBrute:
   groups: RawMeat
   consumeRange: 2
 
