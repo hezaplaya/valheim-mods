@@ -270,6 +270,6 @@ SeekerBrute:
   groups: RawMeat
   consumeRange: 2
 
-Morgen:
+Morgen,Morgen_NonSleeping:
   groups: RawMeat
   consumeRange: 2
