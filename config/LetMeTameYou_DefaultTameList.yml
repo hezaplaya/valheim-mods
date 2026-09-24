@@ -253,7 +253,7 @@ Goblin:
 
 GoblinBrute:
   groups: JustForFunzies
-  consumeRange: 2
+  consumeRange: 5
 
 GoblinShaman:
   groups: JustForFunzies
